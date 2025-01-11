@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 
 # 제목 출력
-st.title("CSV 파일 업로드 예제")
+st.header("데이터 관리")
 
 # 파일 업로드 위젯
-uploaded_file = st.file_uploader("CSV 파일을 선택하세요", type=["csv"])
+uploaded_file = st.file_uploader("필요한 지표자료를 csv 파일 형태로 업로드해 주세요.", type=["csv"])
 
 # 파일이 업로드된 경우 처리
 if uploaded_file is not None:
