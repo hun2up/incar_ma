@@ -8,7 +8,7 @@ st.header("채권관리 대시보드")
 # MySQL 데이터베이스에 연결
 def create_connection():
     return mysql.connector.connect(
-        host='https://92b5-218-39-88-242.ngrok-free.app',
+        host='92b5-218-39-88-242.ngrok-free.app',
         port=8080,  # ngrok이 제공한 포트 번호
         user='hun2up',
         password='INcar851!',
