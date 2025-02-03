@@ -1,38 +1,21 @@
 import streamlit as st
-import mysql.connector
 import pandas as pd
+import streamlit as st
+import psycopg2
 
 # 제목 출력
 st.header("채권관리 대시보드")
 
-# MySQL 데이터베이스에 연결
-def create_connection():
-    return mysql.connector.connect(
-        host='92b5-218-39-88-242.ngrok-free.app',
-        port=8080,  # ngrok이 제공한 포트 번호
-        user='hun2up',
-        password='INcar851!',
-        database='incar_ma'
-    )
+# Initialize connection.
+conn = st.connection("postgresql", type="sql")
 
-# MySQL에서 데이터를 불러와 pandas DataFrame으로 반환
-def fetch_data():
-    connection = create_connection()
-    cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM fa")
-    result = cursor.fetchall()
-    cursor.close()
-    connection.close()
-    return pd.DataFrame(result)
+# Perform query.
+df = conn.query('SELECT * FROM fa;', ttl="10m")
 
-# Streamlit UI
-st.title('MySQL 데이터베이스 데이터')
+# Print results.
+for row in df.itertuples():
+    st.write(f"{row.name} has a :{row.pet}:")
 
-try:
-    df = fetch_data()
-    st.write(df)  # 데이터프레임 출력
-except Exception as e:
-    st.error(f"데이터를 불러오는 중 오류가 발생했습니다: {e}")
 
 # 제목 출력
 st.header("데이터 관리")
