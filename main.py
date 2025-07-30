@@ -3,6 +3,16 @@ from google.oauth2.service_account import Credentials
 import gspread
 import pandas as pd
 
+import json
+
+with open("service_account.json") as f:
+    data = json.load(f)
+
+# private_key 줄바꿈을 이스케이프 처리
+data["private_key"] = data["private_key"].replace("\n", "\\n")
+
+print(json.dumps(data, indent=2))
+
 # 구글 인증
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 creds = Credentials.from_service_account_info(st.secrets["google_service_account"], scopes=scope)
