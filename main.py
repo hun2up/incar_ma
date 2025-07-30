@@ -1,12 +1,11 @@
 import streamlit as st
+from google.oauth2.service_account import Credentials
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 
 # 구글 인증
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds_dict = dict(st.secrets["google_service_account"])
-creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+creds = Credentials.from_service_account_info(st.secrets["google_service_account"], scopes=scope)
 client = gspread.authorize(creds)
 
 # 구글 시트 문서 열기
