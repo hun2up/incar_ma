@@ -3,10 +3,18 @@ from google.oauth2.service_account import Credentials
 import gspread
 import pandas as pd
 
-# 구글 인증
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds = Credentials.from_service_account_info(st.secrets["google_service_account"], scopes=scope)
-client = gspread.authorize(creds)
+# 구글 API 권한 범위 (scope)
+SCOPES = ['https://spreadsheets.google.com/feeds',
+          'https://www.googleapis.com/auth/drive']
+
+# st.secrets에서 서비스 계정 정보 불러오기
+service_account_info = st.secrets["google_service_account"]
+
+# Credentials 객체 생성
+credentials = Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
+
+# gspread 클라이언트 생성
+client = gspread.authorize(credentials)
 
 # 구글 시트 문서 열기
 spreadsheet = client.open("FA 리스트")  # 문서 자체의 이름 (예: 'fa 데이터 모음')
